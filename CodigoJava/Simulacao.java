@@ -1,5 +1,5 @@
-import java.util.Arrays;
 import java.util.PriorityQueue;
+import java.util.stream.IntStream;
 
 public class Simulacao {
     
@@ -10,7 +10,7 @@ public class Simulacao {
         var fila = new PriorityQueue<Event>();
         fila.add(new Event.Chegada(2));
 
-        var servers = 2;
+        var servers = 1;
         var beingServed = 0;
         var capacity = 5;
         var size = 0;
@@ -54,7 +54,15 @@ public class Simulacao {
             currentTime = event.timestamp;
         }
 
-        System.out.println(Arrays.toString(times));
+        final var totalTime = currentTime;
+        
+        System.out.println("Distribuicao de probabilidade:");
+        IntStream.range(0, times.length).forEach(t -> System.out.printf("%d : %f, ", t, times[t]/totalTime));
+        System.out.println();
+        System.out.println("Tempos Acumulados:");
+        IntStream.range(0, times.length).forEach(t -> System.out.printf("%d : %f, ", t, times[t]));
+        System.out.println();
         System.out.println("perdas: " + perdas);
+        System.out.println("Tempo Global: " + currentTime);
     }
 }
